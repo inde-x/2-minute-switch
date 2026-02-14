@@ -1,10 +1,5 @@
-export default function SwitchPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">Switch</h1>
-      <p className="mt-2 text-gray-600">
-        The switch board will go here.
-      </p>
-    </div>
-  );
+import { redirect } from "next/navigation";
+
+export default function SwitchIndex() {
+  redirect("/switch/1");
 }
