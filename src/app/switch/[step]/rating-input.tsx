@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { getRating, setRating, type RatingKind } from "@/lib/ratings";
+import { logEvent } from "@/lib/analytics";
+import { logError } from "@/lib/error";
 
 export default function RatingInput({
   kind,
@@ -17,8 +19,15 @@ export default function RatingInput({
   }, [kind]);
 
   function handleSelect(n: number) {
-    setValue(n);
-    setRating(kind, n);
+    try {
+      setValue(n);
+      setRating(kind, n);
+      logEvent(kind === "before" ? "before_rating_set" : "after_rating_set", {
+        value: n,
+      });
+    } catch (err) {
+      logError("RatingInput.handleSelect", err);
+    }
   }
 
   return (

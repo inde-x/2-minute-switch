@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { logEvent } from "@/lib/analytics";
+import { logError } from "@/lib/error";
 
 const TOTAL_SECONDS = 2 * 60;
 
@@ -34,6 +36,7 @@ export default function ProtocolTimer() {
         if (prev <= 1) {
           setRunning(false);
           setComplete(true);
+          logEvent("timer_complete");
           return 0;
         }
         return prev - 1;
@@ -44,17 +47,34 @@ export default function ProtocolTimer() {
   }, [running, clearTimer]);
 
   const handleStart = () => {
-    if (!complete) setRunning(true);
+    try {
+      if (!complete) {
+        setRunning(true);
+        logEvent("timer_start");
+      }
+    } catch (err) {
+      logError("ProtocolTimer.handleStart", err);
+    }
   };
 
   const handlePause = () => {
-    setRunning(false);
+    try {
+      setRunning(false);
+      logEvent("timer_pause");
+    } catch (err) {
+      logError("ProtocolTimer.handlePause", err);
+    }
   };
 
   const handleReset = () => {
-    setRunning(false);
-    setComplete(false);
-    setRemaining(TOTAL_SECONDS);
+    try {
+      setRunning(false);
+      setComplete(false);
+      setRemaining(TOTAL_SECONDS);
+      logEvent("timer_reset");
+    } catch (err) {
+      logError("ProtocolTimer.handleReset", err);
+    }
   };
 
   return (
