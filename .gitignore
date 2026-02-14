@@ -143,3 +143,5 @@ next-env.d.ts
 
 # Vercel
 .vercel
+.DS_Store
+**/.DS_Store
