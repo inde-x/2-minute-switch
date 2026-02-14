@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ProtocolTimer from "./protocol-timer";
 import RatingInput from "./rating-input";
+import StepTracker from "./step-tracker";
 
 const STEPS = [
   {
@@ -51,6 +52,7 @@ export default async function StepPage({
 
   return (
     <div className="flex flex-col gap-8">
+      <StepTracker step={stepNum} />
       {/* Progress indicator */}
       <nav aria-label="Step progress" className="flex items-center gap-2">
         {STEPS.map((s) => (
