@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import ProtocolTimer from "./protocol-timer";
 
 const STEPS = [
   {
@@ -76,7 +77,7 @@ export default async function StepPage({
         <h1 className="text-2xl font-bold">{step.title}</h1>
         <p className="mt-2 text-gray-600">{step.description}</p>
         <div className="mt-6 rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-sm text-gray-400">
-          {step.placeholder}
+          {stepNum === 3 ? <ProtocolTimer /> : step.placeholder}
         </div>
       </section>
 
