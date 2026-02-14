@@ -6,7 +6,8 @@ type EventName =
   | "timer_start"
   | "timer_pause"
   | "timer_reset"
-  | "timer_complete";
+  | "timer_complete"
+  | "protocol_selected";
 
 export function logEvent(
   name: EventName,

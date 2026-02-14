@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import ProtocolTimer from "./protocol-timer";
 import RatingInput from "./rating-input";
+import ProtocolStep from "./protocol-step";
 import StepTracker from "./step-tracker";
 
 const STEPS = [
@@ -84,12 +84,7 @@ export default async function StepPage({
             <RatingInput kind="before" label="How do you feel right now? (before)" />
           )}
           {stepNum === 2 && step.placeholder}
-          {stepNum === 3 && (
-            <div className="flex flex-col gap-8">
-              <ProtocolTimer />
-              <RatingInput kind="after" label="How do you feel now? (after)" />
-            </div>
-          )}
+          {stepNum === 3 && <ProtocolStep />}
         </div>
       </section>
 
