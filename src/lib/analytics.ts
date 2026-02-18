@@ -7,7 +7,9 @@ type EventName =
   | "timer_pause"
   | "timer_reset"
   | "timer_complete"
-  | "protocol_selected";
+  | "protocol_selected"
+  | "paywall_viewed"
+  | "checkout_clicked";
 
 export function logEvent(
   name: EventName,
