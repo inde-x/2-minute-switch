@@ -9,7 +9,9 @@ type EventName =
   | "timer_complete"
   | "protocol_selected"
   | "paywall_viewed"
-  | "checkout_clicked";
+  | "checkout_clicked"
+  | "paywall_gate_triggered"
+  | "session_completed";
 
 export function logEvent(
   name: EventName,

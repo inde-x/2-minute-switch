@@ -1,13 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { Protocol } from "@/lib/protocols";
 import ProtocolPicker from "./protocol-picker";
 import ProtocolTimer from "./protocol-timer";
 import RatingInput from "./rating-input";
+import { markFreeSessionUsed } from "@/lib/entitlements";
+import { logEvent } from "@/lib/analytics";
+import { logError } from "@/lib/error";
 
 export default function ProtocolStep() {
   const [selected, setSelected] = useState<Protocol | null>(null);
+
+  const handleAfterRating = useCallback(async () => {
+    try {
+      logEvent("session_completed");
+      // Mark the free session used. No-op for paid users / already-used profiles.
+      await markFreeSessionUsed();
+    } catch (err) {
+      logError("ProtocolStep.handleAfterRating", err);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-8">
@@ -36,7 +49,11 @@ export default function ProtocolStep() {
 
           <ProtocolTimer />
 
-          <RatingInput kind="after" label="How do you feel now? (after)" />
+          <RatingInput
+            kind="after"
+            label="How do you feel now? (after)"
+            onSelect={handleAfterRating}
+          />
         </>
       )}
     </div>

@@ -8,9 +8,12 @@ import { logError } from "@/lib/error";
 export default function RatingInput({
   kind,
   label,
+  onSelect,
 }: {
   kind: RatingKind;
   label: string;
+  /** Optional callback fired after a rating is stored. */
+  onSelect?: (value: number) => void;
 }) {
   const [value, setValue] = useState<number | null>(null);
 
@@ -25,6 +28,7 @@ export default function RatingInput({
       logEvent(kind === "before" ? "before_rating_set" : "after_rating_set", {
         value: n,
       });
+      onSelect?.(n);
     } catch (err) {
       logError("RatingInput.handleSelect", err);
     }
