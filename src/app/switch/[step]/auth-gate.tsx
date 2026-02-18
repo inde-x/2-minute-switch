@@ -20,7 +20,11 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       };
 
       const redirectToPaywall = () => {
-        logEvent("paywall_gate_triggered", { from: pathname });
+        try {
+          logEvent("paywall_gate_triggered", { from: pathname });
+        } catch {
+          // analytics must never block the redirect
+        }
         const next = encodeURIComponent(pathname);
         window.location.href = `/paywall?next=${next}`;
       };
